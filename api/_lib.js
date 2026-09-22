@@ -2,6 +2,17 @@ import crypto from 'node:crypto';
 import { createClient } from '@supabase/supabase-js';
 
 /* ---------- Supabase (solo servidor, con service_role) ---------- */
+// Este proyecto no usa Supabase Realtime (canales en vivo), pero el cliente
+// intenta inicializarlo de todos modos al crearse. En el runtime de Vercel
+// (Node 20) no existe WebSocket global, así que sin esto el simple hecho de
+// crear el cliente tumba la función con 500. Le damos un "transporte" de
+// relleno que nunca se llega a usar (no abrimos canales realtime).
+class NoRealtimeTransport {
+  constructor() {
+    throw new Error('Realtime (WebSocket) no está habilitado en este proyecto.');
+  }
+}
+
 let _db;
 /** Solo para pruebas: inyecta un cliente falso. */
 export function __setDb(fake) { _db = fake; }
@@ -9,7 +20,10 @@ export function db() {
   if (!_db) {
     const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = process.env;
     if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) throw new Error('Faltan variables de Supabase');
-    _db = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, { auth: { persistSession: false } });
+    _db = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+      auth: { persistSession: false },
+      realtime: { transport: NoRealtimeTransport },
+    });
   }
   return _db;
 }
