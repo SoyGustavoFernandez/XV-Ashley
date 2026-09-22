@@ -1,0 +1,27 @@
+{
+  "rewrites": [
+    { "source": "/puerta", "destination": "/puerta/index.html" },
+    { "source": "/panel", "destination": "/panel/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(puerta|panel)(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "same-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(self)" }
+      ]
+    }
+  ],
+  "crons": [
+    { "path": "/api/keepalive", "schedule": "0 12 * * *" }
+  ]
+}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel · XV Ashley</title>
+<style>
+:root{--gold:#b8892f;--ink:#5b3a45;--ink2:#8a6470;--p1:#fdf0f3;--p2:#f9dbe3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--p2);color:var(--ink);padding:16px}
+.wrap{max-width:1040px;margin:0 auto}
+h1{font:400 30px Georgia,serif;color:#7a3a4f}
+h2{font:600 13px system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.live{font-size:12px;color:var(--ink2)} .live i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2a9d4a;margin-right:6px;animation:b 1.6s infinite}
+@keyframes b{50%{opacity:.3}}
+.panel{background:#fff;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 6px 18px #7a3a4f1f}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stats div{background:var(--p1);border-radius:12px;padding:14px;text-align:center}
+.stats b{display:block;font:600 30px Georgia,serif}
+.stats span{font-size:11px;color:var(--ink2);letter-spacing:.08em;text-transform:uppercase}
+.stats .big{background:#fbeec8}
+.bar{height:10px;border-radius:99px;background:#f0dde3;margin-top:12px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#b8892f,#f1dc93)}
+input,textarea,select{padding:10px 12px;border:1px solid #d9b9c2;border-radius:10px;font:inherit;color:var(--ink);background:#fff}
+textarea{width:100%;min-height:90px}
+button{padding:9px 14px;border:0;border-radius:10px;background:var(--gold);color:#fff;font:600 13px system-ui;cursor:pointer}
+button.sec{background:#f3e3e8;color:var(--ink)}
+button.danger{background:#f6dcdc;color:#a3262a}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:9px 6px;border-bottom:1px solid #f0dde3;text-align:left;vertical-align:top}
+th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.tbl{overflow-x:auto}
+.ok{color:#237a3b;font-weight:600}.wait{color:#a4761a}.no{color:#a3262a}
+.msg{max-width:220px;color:var(--ink2);font-style:italic}
+.acts{display:flex;gap:6px;flex-wrap:wrap}
+.acts button{padding:6px 10px;font-size:12px}
+#login{max-width:340px;margin:12vh auto;text-align:center}
+#login input{width:100%;margin:12px 0}
+.hidden{display:none!important}
+.hint{font-size:12px;color:var(--ink2);margin-top:8px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#3b2a1a;color:#fff;padding:10px 16px;border-radius:99px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<div id="login" class="panel">
+  <h1>Panel privado</h1>
+  <input id="pw" type="password" placeholder="Contraseña" autocomplete="current-password">
+  <button id="loginBtn" style="width:100%">Entrar</button>
+  <div class="no hint" id="lerr" role="alert"></div>
+</div>
+
+<div id="app" class="wrap hidden">
+  <div class="top">
+    <h1>XV Años · Ashley</h1>
+    <div class="row"><span class="live"><i></i>En vivo · <span id="upd">–</span></span><button class="sec" id="csv">Exportar CSV</button><button class="sec" id="logout">Salir</button></div>
+  </div>
+
+  <div class="panel">
+    <div class="stats">
+      <div class="big"><b id="sPeople">–</b><span>Personas confirmadas</span></div>
+      <div><b id="sFam">–</b><span>Familias confirmadas</span></div>
+      <div class="big"><b id="sInside">–</b><span>Personas ya ingresaron</span></div>
+      <div><b id="sLeft">–</b><span>Faltan por llegar</span></div>
+      <div><b id="sPend">–</b><span>Sin responder</span></div>
+      <div><b id="sDecl">–</b><span>No asistirán</span></div>
+    </div>
+    <div class="bar"><i id="bar" style="width:0"></i></div>
+    <div class="hint" id="barTxt"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Agregar invitados</h2>
+    <p class="hint" style="margin:0 0 8px">Una línea por invitado o familia: <b>Nombre, cupos</b>. Ejemplo: <code>Familia Rojas Vega, 4</code> (si omites el cupo será 1).</p>
+    <textarea id="newList" placeholder="Familia Rojas Vega, 4&#10;Carla Mendoza, 2&#10;Luis Chávez"></textarea>
+    <div class="row" style="margin-top:8px"><button id="addBtn">Crear invitaciones</button><span class="hint" id="addMsg"></span></div>
+  </div>
+
+  <div class="panel">
+    <div class="top" style="margin-bottom:8px">
+      <h2 style="margin:0">Invitados</h2>
+      <div class="row">
+        <input id="search" placeholder="Buscar nombre…">
+        <select id="filter">
+          <option value="">Todos</option><option value="confirmed">Confirmados</option><option value="pending">Sin responder</option>
+          <option value="declined">No asistirán</option><option value="inside">Ya ingresaron</option><option value="missing">Confirmados sin ingresar</option>
+        </select>
+      </div>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>Invitado</th><th>Cupo</th><th>Estado</th><th>Personas</th><th>Ingreso</th><th>Mensaje</th><th>Enlace</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+const hora = (iso) => new Date(iso).toLocaleString('es-PE', { timeZone: 'America/Lima', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
+const link = (g) => `${location.origin}/?i=${g.code}`;
+const toast = (t) => { $('toast').textContent = t; $('toast').classList.add('on'); setTimeout(() => $('toast').classList.remove('on'), 2200); };
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, { headers: { 'Content-Type': 'application/json' }, ...opts });
+  let d = {}; try { d = await r.json(); } catch {}
+  if (!r.ok) throw Object.assign(new Error(d.error || 'Error'), { status: r.status });
+  return d;
+}
+
+/* ---------- Login ---------- */
+async function login() {
+  $('lerr').textContent = '';
+  try { await api('/api/login', { method: 'POST', body: JSON.stringify({ role: 'admin', secret: $('pw').value }) }); start(); }
+  catch (e) { $('lerr').textContent = e.status === 401 ? 'Contraseña incorrecta' : 'No se pudo conectar'; }
+}
+$('loginBtn').onclick = login;
+$('pw').addEventListener('keydown', (e) => e.key === 'Enter' && login());
+$('logout').onclick = async () => { await api('/api/login', { method: 'DELETE' }); location.reload(); };
+
+/* ---------- Datos en vivo ---------- */
+let guests = [];
+async function load() {
+  try {
+    const d = await api('/api/admin');
+    guests = d.guests;
+    const s = d.stats;
+    $('sPeople').textContent = s.confirmedPeople; $('sFam').textContent = s.confirmedFamilies;
+    $('sInside').textContent = s.insidePeople; $('sLeft').textContent = s.confirmedPeople - s.insidePeople;
+    $('sPend').textContent = s.pendingFamilies; $('sDecl').textContent = s.declinedFamilies;
+    const pct = s.confirmedPeople ? Math.round((s.insidePeople / s.confirmedPeople) * 100) : 0;
+    $('bar').style.width = pct + '%';
+    $('barTxt').textContent = `${s.insidePeople} de ${s.confirmedPeople} personas confirmadas ya ingresaron (${pct}%) · Cupos totales invitados: ${s.invitedSeats}`;
+    $('upd').textContent = new Date().toLocaleTimeString('es-PE', { timeZone: 'America/Lima' });
+    renderRows();
+  } catch (e) { if (e.status === 401) location.reload(); }
+}
+
+function visible() {
+  const q = $('search').value.trim().toLowerCase(), f = $('filter').value;
+  return guests.filter((g) => {
+    if (q && !g.name.toLowerCase().includes(q)) return false;
+    if (f === 'inside') return !!g.checked_in_at;
+    if (f === 'missing') return g.status === 'confirmed' && !g.checked_in_at;
+    return !f || g.status === f;
+  });
+}
+
+function renderRows() {
+  $('rows').innerHTML = visible().map((g) => {
+    const estado = g.status === 'confirmed' ? '<span class="ok">Confirmó</span>' : g.status === 'declined' ? '<span class="no">No asiste</span>' : '<span class="wait">Pendiente</span>';
+    const ingreso = g.checked_in_at ? `<span class="ok">✔ ${hora(g.checked_in_at)}</span><br><button class="sec" data-a="undo" data-id="${g.id}" style="padding:3px 8px;font-size:11px;margin-top:4px">Deshacer</button>` : (g.status === 'confirmed' ? '<span class="wait">Falta</span>' : '–');
+    return `<tr>
+      <td><b>${esc(g.name)}</b>${g.phone ? `<br><small>${esc(g.phone)}</small>` : ''}</td>
+      <td>${g.max_party}</td><td>${estado}</td><td>${g.party_size ?? '–'}</td><td>${ingreso}</td>
+      <td class="msg">${esc(g.message || '')}</td>
+      <td><div class="acts">
+        <button data-a="copy" data-id="${g.id}">Copiar</button>
+        <button class="sec" data-a="wa" data-id="${g.id}">WhatsApp</button>
+        <button class="danger" data-a="del" data-id="${g.id}">Borrar</button>
+      </div></td></tr>`;
+  }).join('') || '<tr><td colspan="7" class="hint">Sin resultados.</td></tr>';
+}
+$('search').oninput = renderRows; $('filter').onchange = renderRows;
+
+$('rows').onclick = async (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  const g = guests.find((x) => x.id === b.dataset.id); if (!g) return;
+  if (b.dataset.a === 'copy') {
+    try { await navigator.clipboard.writeText(link(g)); toast('Enlace copiado'); } catch { prompt('Copia el enlace:', link(g)); }
+  } else if (b.dataset.a === 'wa') {
+    const t = `Hola ${g.name}, te invito a mis XV años. Aquí está tu invitación personal, confirma tu asistencia y obtén tu código QR de ingreso: ${link(g)}`;
+    window.open('https://wa.me/?text=' + encodeURIComponent(t), '_blank');
+  } else if (b.dataset.a === 'del') {
+    if (!confirm(`¿Borrar a "${g.name}"? Su enlace y su QR dejarán de funcionar.`)) return;
+    await api('/api/admin', { method: 'POST', body: JSON.stringify({ action: 'delete', id: g.id }) }); load();
+  } else if (b.dataset.a === 'undo') {
+    if (!confirm(`¿Deshacer el ingreso de "${g.name}"? Su QR volverá a ser válido.`)) return;
+    await api('/api/admin', { method: 'POST', body: JSON.stringify({ action: 'reset_checkin', id: g.id }) }); load();
+  }
+};
+
+/* ---------- Alta de invitados ---------- */
+$('addBtn').onclick = async () => {
+  const list = $('newList').value.split('\n').map((l) => l.trim()).filter(Boolean).map((l) => {
+    const i = l.lastIndexOf(',');
+    const n = i > -1 ? parseInt(l.slice(i + 1), 10) : NaN;
+    return Number.isInteger(n) ? { name: l.slice(0, i).trim(), maxParty: n } : { name: l, maxParty: 1 };
+  });
+  if (!list.length) { $('addMsg').textContent = 'Escribe al menos un invitado'; return; }
+  $('addBtn').disabled = true;
+  try {
+    const d = await api('/api/admin', { method: 'POST', body: JSON.stringify({ action: 'add', guests: list }) });
+    $('newList').value = ''; $('addMsg').textContent = `${d.added.length} invitaciones creadas`;
+    load();
+  } catch (e) { $('addMsg').textContent = e.message; }
+  $('addBtn').disabled = false;
+};
+
+/* ---------- CSV ---------- */
+$('csv').onclick = () => {
+  const q = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const rows = [['Nombre','Cupo','Estado','Personas','Celular','Mensaje','Ingreso','Enlace'].map(q).join(',')]
+    .concat(guests.map((g) => [g.name, g.max_party, g.status, g.party_size ?? '', g.phone ?? '', g.message ?? '', g.checked_in_at ?? '', link(g)].map(q).join(',')));
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + rows.join('\n')], { type: 'text/csv;charset=utf-8' }));
+  a.download = 'invitados-xv-ashley.csv'; a.click();
+};
+
+function start() {
+  $('login').classList.add('hidden'); $('app').classList.remove('hidden');
+  load(); setInterval(load, 5000);
+}
+fetch('/api/admin').then((r) => { if (r.ok) start(); }).catch(() => {});
+</script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XV Años de Ashley · Invitación</title>
+<meta name="description" content="Estás invitado a los XV años de Ashley. 05 de marzo de 2027, Castilla, Piura.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#eeb0c3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#b8892f; --gold2:#e9cf87; --ink:#5b3a45; --ink2:#8a6470; --wine:#7a3a4f;
+  --p1:#fdf0f3; --p2:#f9dbe3; --p3:#f2bccb; --p4:#e39bb0; --cream:#fffaf0;
+  --foil:linear-gradient(135deg,#b8892f 0%,#f1dc93 45%,#b8892f 100%);
+  --serif:'Playfair Display',Georgia,serif; --script:'Pinyon Script','Snell Roundhand',cursive; --sans:'Montserrat',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--p2);-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden;height:100svh}
+img{max-width:100%}
+button{font:inherit;cursor:pointer}
+
+/* ---------- Pantalla de apertura ---------- */
+#gate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;
+  background:linear-gradient(180deg,#f7d3dc,#eeb0c3);transition:opacity .9s ease,transform .9s ease;padding:24px;text-align:center}
+#gate.hide{opacity:0;transform:scale(1.06);pointer-events:none}
+.kicker{font:400 10.5px var(--sans);letter-spacing:.34em;text-transform:uppercase;color:#7a5a1e}
+.gate-name{font-family:var(--script);font-size:54px;color:#fff;text-shadow:0 2px 10px #a5506a66;line-height:1}
+.env{position:relative;width:min(300px,78vw);aspect-ratio:300/200;border:0;background:#f6c4d1;border-radius:8px;box-shadow:0 18px 40px #7a3a4f55;perspective:900px}
+.env .pocket{position:absolute;inset:0;background:#e9a5b9;clip-path:polygon(0 100%,0 26%,50% 68%,100% 26%,100% 100%);border-radius:0 0 8px 8px}
+.env .flap{position:absolute;left:0;right:0;top:0;height:62%;background:#eeadc0;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .9s ease;z-index:2}
+.env.open .flap{transform:rotateX(180deg)}
+.seal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f5e0a0,#b8892f 70%);display:grid;place-items:center;
+  font:400 40px var(--script);color:#6a4a10;box-shadow:0 5px 12px #0004;transition:opacity .4s}
+.env.open .seal{opacity:0}
+.tap{font:500 12px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--wine);animation:blink 2s infinite}
+@keyframes blink{50%{opacity:.4}}
+
+#mute{position:fixed;right:14px;top:14px;z-index:40;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);background:#fffaf0dd;color:var(--gold);font-size:18px;display:none;box-shadow:0 4px 12px #7a3a4f33}
+#mute.on{display:grid;place-items:center}
+
+/* ---------- Secciones ---------- */
+section{position:relative;padding:74px 22px;text-align:center;overflow:hidden}
+.wrap{max-width:460px;margin:0 auto}
+.h2{font:400 30px var(--serif);color:var(--wine);margin:8px 0 18px}
+.lead{font-size:14px;line-height:1.75;color:var(--ink2)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:none}
+.edge{position:absolute;left:0;right:0;height:18px;background:radial-gradient(circle at 11px 0,transparent 10px,var(--edge,#fffaf0) 11px) 0 0/22px 18px repeat-x}
+.edge.b{bottom:-1px;transform:scaleY(-1)}
+.btn{display:inline-block;padding:13px 24px;border:0;border-radius:999px;font:500 12px var(--sans);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  background:var(--foil);color:#4a3210;box-shadow:0 5px 14px #b8892f55}
+.btn.ghost{background:transparent;border:1px solid var(--gold);color:var(--gold);box-shadow:none}
+.btn:disabled{opacity:.6}
+.paper{background:var(--cream);border:1px solid var(--gold);box-shadow:0 0 0 6px var(--cream),0 0 0 7px #c9a24b,0 14px 30px #7a3a4f33;border-radius:4px;padding:30px 22px;margin:8px 6px}
+
+/* Portada */
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:linear-gradient(180deg,#f7d3dc,#eeb0c3 70%,#e7a0b7)}
+.hero .kicker{color:#fff;text-shadow:0 1px 6px #a5506a88}
+.oval{width:min(260px,66vw);aspect-ratio:210/262;border-radius:50%;margin:14px auto;border:3px solid var(--cream);box-shadow:0 0 0 2px var(--gold),0 14px 30px #7a3a4f55;background:linear-gradient(160deg,#f3c9d5,#e7a7ba 60%,#d98ea6) center/cover}
+.name{font:400 clamp(72px,22vw,104px)/1 var(--script);color:#fff;text-shadow:0 2px 12px #a5506a77}
+.hero .date{color:#fff;letter-spacing:.32em;font-size:12px;margin-top:6px}
+.arrow{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:#fff;font-size:22px;animation:bob 1.8s infinite}
+@keyframes bob{50%{transform:translate(-50%,8px)}}
+
+/* Invitación + cuenta regresiva */
+.s-invite{background:var(--cream);--edge:#eeb0c3}
+.s-invite .lead{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink)}
+.cd{display:flex;gap:9px;justify-content:center;margin-top:30px}
+.cd div{min-width:66px;padding:12px 4px;border-radius:14px;background:#fff;border:1px solid var(--gold);box-shadow:0 6px 16px #b8892f22}
+.cd b{display:block;font:600 26px var(--serif);color:var(--wine)}
+.cd span{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2)}
+
+/* Lugar */
+.s-place{background:linear-gradient(180deg,#eeb0c3,#e7a0b7)}
+.s-place .kicker,.s-dress .kicker{color:#6a4a10}
+.place-line{font:400 20px var(--serif);color:var(--ink);line-height:1.5;margin:6px 0 4px}
+.place-sub{font-size:13px;color:var(--ink2);margin-bottom:20px}
+
+/* Vestimenta */
+.s-dress{background:linear-gradient(180deg,#e7a0b7,#f2bccb)}
+.sw{display:flex;gap:12px;justify-content:center;margin:16px 0 18px}
+.sw i{width:36px;height:36px;border-radius:50%;display:block;border:2px solid #fff;box-shadow:0 0 0 1px #0002}
+.sw i.no{position:relative;background:linear-gradient(90deg,#f7c5d3,#e78aa6)}
+.sw i.no::after{content:'';position:absolute;left:50%;top:-6px;bottom:-6px;border-left:3px solid #b3261e;transform:rotate(45deg)}
+.notice{border:1px solid #d9c08a;border-radius:10px;padding:14px;font-size:13px;line-height:1.6;color:var(--ink2);margin-top:6px}
+.notice strong{color:var(--wine);font-weight:500}
+
+/* Galería */
+.s-gallery{background:linear-gradient(180deg,#f2bccb,#fbeec8)}
+.g{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+.g button{border:0;padding:0;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:linear-gradient(140deg,#f6d3dd,#e8a9bc) center/cover;box-shadow:0 8px 18px #7a3a4f33;transition:transform .3s}
+.g button:nth-child(3n){background-color:#e3c98a}
+.g button:active{transform:scale(.97)}
+#lb{position:fixed;inset:0;z-index:60;background:#2b1a20ee;display:none;align-items:center;justify-content:center;padding:20px}
+#lb.on{display:flex}
+#lb div{width:min(92vw,520px);aspect-ratio:3/4;background:center/contain no-repeat}
+
+/* Regalos */
+.s-gifts{background:linear-gradient(180deg,#fbeec8,#f2d896)}
+.yape{display:flex;align-items:center;gap:10px;justify-content:center;margin:12px 0 4px;flex-wrap:wrap}
+.yape em{font-style:normal;font-size:10px;background:#742284;color:#fff;border-radius:7px;padding:5px 9px;letter-spacing:.12em}
+.yape b{font:600 22px var(--sans);letter-spacing:.1em;color:var(--ink)}
+.small{font-size:12px;color:var(--ink2);margin-top:4px}
+
+/* RSVP */
+.s-rsvp{background:linear-gradient(180deg,#f2d896,#eeb0c3 40%,#e7a0b7)}
+.fld{text-align:left;margin-top:14px}
+.fld label{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);margin-bottom:5px}
+.fld input,.fld textarea{width:100%;padding:12px;border:1px solid #d9b9c2;border-radius:10px;background:#fff;font:400 14px var(--sans);color:var(--ink)}
+.fld textarea{min-height:76px;resize:vertical}
+.stepper{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border:1px solid #d9b9c2;border-radius:10px;background:#fff}
+.stepper span{display:flex;gap:18px;align-items:center;font:600 18px var(--serif)}
+.stepper button{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:18px;line-height:1}
+.actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.err{color:#a3262a;font-size:13px;margin-top:12px;min-height:16px}
+.hello{font:italic 400 19px var(--serif);color:var(--ink)}
+.ticket{background:#fff;border:1px solid var(--gold);border-radius:16px;padding:20px;margin-top:6px}
+.ticket h3{font:600 22px var(--serif);color:var(--ink);margin-top:4px}
+.ticket p{font-size:13px;color:var(--ink2);margin-top:4px}
+#qrbox{width:210px;height:210px;margin:16px auto 10px;background:#fff;padding:8px;border-radius:10px;border:1px solid #eadfc8}
+#qrbox svg{width:100%;height:100%;display:block}
+.badge{display:inline-block;margin-top:6px;padding:5px 12px;border-radius:999px;background:#e9f6ec;color:#237a3b;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.badge.used{background:#fdecec;color:#a3262a}
+.foot{padding:28px 22px 40px;text-align:center;background:#e7a0b7}
+.foot .name{font-size:54px}
+.foot p{color:#fff;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:6px}
+</style>
+</head>
+<body class="locked">
+
+<audio id="bgm" loop preload="auto"></audio>
+<button id="mute" aria-label="Silenciar o activar música">♪</button>
+
+<!-- Apertura -->
+<div id="gate">
+  <div class="kicker">Tienes una invitación</div>
+  <div class="gate-name">Ashley</div>
+  <button class="env" id="openBtn" aria-label="Abrir invitación">
+    <span class="pocket"></span><span class="flap"></span><span class="seal">A</span>
+  </button>
+  <div class="tap">Toca el sello para abrir</div>
+</div>
+
+<main>
+  <!-- Portada -->
+  <section class="hero" id="inicio">
+    <div class="kicker">Mis XV Años</div>
+    <div class="oval" id="fotoPortada"></div>
+    <h1 class="name">Ashley</h1>
+    <div class="date">05 · 03 · 2027</div>
+    <div class="arrow">↓</div>
+  </section>
+
+  <!-- Invitación + cuenta regresiva -->
+  <section class="s-invite">
+    <div class="wrap reveal">
+      <div class="kicker" style="color:var(--gold)">Estás invitado</div>
+      <h2 class="h2">A celebrar mis quince años</h2>
+      <p class="lead" id="frase"></p>
+      <div class="cd" id="cd">
+        <div><b id="cdD">--</b><span>Días</span></div>
+        <div><b id="cdH">--</b><span>Horas</span></div>
+        <div><b id="cdM">--</b><span>Min</span></div>
+        <div><b id="cdS">--</b><span>Seg</span></div>
+      </div>
+    </div>
+    <div class="edge b"></div>
+  </section>
+
+  <!-- Lugar -->
+  <section class="s-place" id="lugar">
+    <div class="wrap reveal">
+      <div class="paper">
+        <div class="kicker" id="fechaTxt"></div>
+        <h2 class="h2" id="horaTxt"></h2>
+        <div class="place-line" id="lugarNombre"></div>
+        <div class="place-line" id="direccion"></div>
+        <div class="place-sub" id="ciudad"></div>
+        <a class="btn" id="mapsBtn" target="_blank" rel="noopener">Abrir en Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vestimenta -->
+  <section class="s-dress">
+    <div class="wrap reveal">
+      <div class="paper">
+        <div class="kicker">Código de vestimenta</div>
+        <h2 class="h2">Elegante</h2>
+        <p class="lead">Trajes, vestidos largos o de cóctel.</p>
+        <div class="notice"><strong>El rosa y el dorado, en todas sus tonalidades, están reservados para la quinceañera.</strong><br>Gracias por ayudarnos a que Ashley sea la única en rosa y dorado esa noche.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería -->
+  <section class="s-gallery">
+    <div class="wrap reveal">
+      <div class="kicker">Momentos</div>
+      <h2 class="h2">Mi historia en fotos</h2>
+      <div class="g" id="galeria"></div>
+    </div>
+  </section>
+
+  <!-- Regalos -->
+  <section class="s-gifts">
+    <div class="wrap reveal">
+      <div class="paper">
+        <div class="kicker">Regalos</div>
+        <h2 class="h2">Tu presencia es mi mejor regalo</h2>
+        <p class="lead">Si además deseas hacerme un aporte, puedes enviarlo por Yape:</p>
+        <div class="yape"><em>YAPE</em><b id="yapeNum"></b></div>
+        <div class="small" id="yapeNombre"></div>
+        <div style="margin-top:16px"><button class="btn ghost" id="copyYape">Copiar número</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Confirmación -->
+  <section class="s-rsvp" id="rsvp">
+    <div class="wrap reveal">
+      <div class="kicker" style="color:#6a4a10">Confirmación de asistencia</div>
+      <h2 class="h2" style="color:#fff;text-shadow:0 1px 8px #a5506a88">¿Nos acompañas?</h2>
+      <div class="paper" id="rsvpBox"><p class="lead">Cargando…</p></div>
+    </div>
+  </section>
+
+  <div class="foot"><div class="name">Ashley</div><p>XV Años · 05 · 03 · 2027</p></div>
+</main>
+
+<div id="lb"><div></div></div>
+
+<script src="config.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(() => {
+  const C = window.INV;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const FALLBACK = 'linear-gradient(160deg,#f3c9d5,#e7a7ba 60%,#d98ea6)';
+
+  /* ---------- Textos desde config ---------- */
+  $('frase').textContent = C.fraseApertura;
+  $('fechaTxt').textContent = C.fechaTexto;
+  $('horaTxt').textContent = C.hora;
+  $('lugarNombre').textContent = C.lugarNombre || '';
+  if (!C.lugarNombre) $('lugarNombre').remove();
+  $('direccion').textContent = C.direccion;
+  $('ciudad').textContent = C.ciudad;
+  $('mapsBtn').href = C.mapsUrl || 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${C.direccion}, ${C.ciudad}`);
+  $('yapeNum').textContent = C.yapeNumero;
+  $('yapeNombre').textContent = C.yapeNombre ? `A nombre de ${C.yapeNombre}` : '';
+  $('fotoPortada').style.backgroundImage = `url("${C.fotos.portada}"), ${FALLBACK}`;
+  $('copyYape').onclick = async (e) => {
+    const digits = C.yapeNumero.replace(/\D/g, '');
+    try { await navigator.clipboard.writeText(digits); e.target.textContent = '¡Copiado!'; }
+    catch { e.target.textContent = digits; }
+    setTimeout(() => (e.target.textContent = 'Copiar número'), 2200);
+  };
+
+  /* ---------- Galería con visor ---------- */
+  $('galeria').innerHTML = C.fotos.galeria.map((src, i) =>
+    `<button data-i="${i}" aria-label="Foto ${i + 1}" style="background-image:url('${esc(src)}'),${FALLBACK}"></button>`).join('');
+  $('galeria').onclick = (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    $('lb').firstElementChild.style.backgroundImage = `url("${C.fotos.galeria[b.dataset.i]}")`;
+    $('lb').classList.add('on');
+  };
+  $('lb').onclick = () => $('lb').classList.remove('on');
+
+  /* ---------- Apertura + música ---------- */
+  const bgm = $('bgm'), mute = $('mute');
+  bgm.src = C.musica; bgm.volume = 0.5;
+  $('openBtn').onclick = () => {
+    $('openBtn').classList.add('open');
+    bgm.play().then(() => { mute.classList.add('on'); }).catch(() => { /* sin audio: seguimos */ });
+    setTimeout(() => { $('gate').classList.add('hide'); document.body.classList.remove('locked'); }, 950);
+  };
+  bgm.addEventListener('error', () => mute.classList.remove('on'));
+  mute.onclick = () => {
+    if (bgm.paused) { bgm.play(); mute.style.opacity = 1; mute.textContent = '♪'; }
+    else { bgm.pause(); mute.style.opacity = .55; mute.textContent = '✕'; }
+  };
+  document.addEventListener('visibilitychange', () => { if (document.hidden) bgm.pause(); else if (mute.textContent === '♪' && mute.classList.contains('on')) bgm.play().catch(() => {}); });
+
+  /* ---------- Cuenta regresiva ---------- */
+  const target = Date.parse(C.fechaISO);
+  const pad = (n) => String(n).padStart(2, '0');
+  function tick() {
+    let d = target - Date.now();
+    if (d <= 0) { $('cd').innerHTML = '<div style="min-width:220px"><b>¡Es hoy!</b><span>Nos vemos en la fiesta</span></div>'; return; }
+    const D = Math.floor(d / 864e5); d %= 864e5;
+    const H = Math.floor(d / 36e5); d %= 36e5;
+    const M = Math.floor(d / 6e4), S = Math.floor((d % 6e4) / 1e3);
+    $('cdD').textContent = D; $('cdH').textContent = pad(H); $('cdM').textContent = pad(M); $('cdS').textContent = pad(S);
+  }
+  tick(); setInterval(tick, 1000);
+
+  /* ---------- Animación al hacer scroll ---------- */
+  const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add('in')), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  /* ---------- RSVP ---------- */
+  const CODE = (new URLSearchParams(location.search).get('i') || '').trim().toUpperCase();
+  const box = $('rsvpBox');
+  let guest = null, party = 1;
+
+  async function api(path, opts = {}) {
+    const r = await fetch(path, { headers: { 'Content-Type': 'application/json' }, ...opts });
+    let d = {}; try { d = await r.json(); } catch {}
+    if (!r.ok) throw Object.assign(new Error(d.error || 'Ocurrió un error'), { status: r.status });
+    return d;
+  }
+
+  function renderNoLink() {
+    box.innerHTML = '<p class="lead">Para confirmar tu asistencia usa el <strong>enlace personal</strong> que te enviamos por WhatsApp. Si no lo encuentras, escríbenos y te lo reenviamos.</p>';
+  }
+
+  function renderForm() {
+    party = guest.partySize || guest.maxParty;
+    box.innerHTML = `
+      <p class="hello">Hola, ${esc(guest.name)}</p>
+      <p class="lead" style="margin-top:6px">${guest.maxParty > 1 ? `Tu invitación es para hasta <b>${guest.maxParty}</b> personas.` : 'Tu invitación es para <b>1</b> persona.'}</p>
+      ${guest.maxParty > 1 ? `<div class="fld"><label>¿Cuántas personas asistirán? (contigo)</label>
+        <div class="stepper">Total <span><button type="button" id="minus">−</button><b id="pn">${party}</b><button type="button" id="plus">+</button></span></div></div>` : ''}
+      <div class="fld"><label>Celular (opcional)</label><input id="phone" type="tel" inputmode="tel" maxlength="30" placeholder="9XX XXX XXX"></div>
+      <div class="fld"><label>Mensaje para Ashley (opcional)</label><textarea id="msg" maxlength="300" placeholder="Escribe unas palabras…"></textarea></div>
+      <div class="actions">
+        <button class="btn" id="yes">Sí, asistiré</button>
+        <button class="btn ghost" id="no">No podré asistir</button>
+      </div>
+      <div class="err" id="err" role="alert"></div>`;
+    if (guest.maxParty > 1) {
+      $('minus').onclick = () => { party = Math.max(1, party - 1); $('pn').textContent = party; };
+      $('plus').onclick = () => { party = Math.min(guest.maxParty, party + 1); $('pn').textContent = party; };
+    }
+    $('yes').onclick = () => submit(true);
+    $('no').onclick = () => submit(false);
+  }
+
+  async function submit(attending) {
+    const btns = box.querySelectorAll('button'); btns.forEach((b) => (b.disabled = true));
+    $('err').textContent = '';
+    try {
+      guest = await api('/api/rsvp', { method: 'POST', body: JSON.stringify({
+        i: CODE, attending, partySize: attending ? party : undefined,
+        phone: $('phone').value, message: $('msg').value }) });
+      render();
+      $('rsvp').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) {
+      $('err').textContent = e.message; btns.forEach((b) => (b.disabled = false));
+    }
+  }
+
+  function renderTicket() {
+    const n = guest.partySize;
+    box.innerHTML = `
+      <div class="kicker" style="color:var(--gold)">¡Confirmado!</div>
+      <div class="ticket">
+        <div class="kicker" style="color:var(--gold)">XV Años de ${esc(C.nombre)}</div>
+        <h3>${esc(guest.name)}</h3>
+        <p>${n} ${n === 1 ? 'persona' : 'personas'} · ${esc(C.fechaTexto)} · ${esc(C.hora)}</p>
+        <div id="qrbox"></div>
+        <p style="font-size:12px">Presenta este código en la puerta</p>
+        ${guest.checkedIn ? '<span class="badge used">Ya utilizado</span>' : '<span class="badge">Válido · no usado</span>'}
+      </div>
+      <div class="actions">
+        <button class="btn" id="save">Guardar imagen</button>
+        ${guest.checkedIn ? '' : '<button class="btn ghost" id="change">Cambiar mi respuesta</button>'}
+      </div>
+      <p class="small">Guarda una captura: sin internet también podrás mostrarla.</p>`;
+    const q = qrcode(0, 'M'); q.addData(guest.code); q.make();
+    $('qrbox').innerHTML = q.createSvgTag({ cellSize: 8, margin: 0, scalable: false });
+    $('save').onclick = saveTicket;
+    if ($('change')) $('change').onclick = renderForm;
+  }
+
+  function renderDeclined() {
+    box.innerHTML = `<p class="hello">Gracias por avisar, ${esc(guest.name)}</p>
+      <p class="lead" style="margin-top:8px">Lamentamos que no puedas acompañarnos. Te enviamos un abrazo grande.</p>
+      <div class="actions"><button class="btn ghost" id="change">Cambiar mi respuesta</button></div>`;
+    $('change').onclick = renderForm;
+  }
+
+  function render() {
+    if (guest.status === 'confirmed') renderTicket();
+    else if (guest.status === 'declined') renderDeclined();
+    else renderForm();
+  }
+
+  function saveTicket() {
+    const svg = document.querySelector('#qrbox svg');
+    const xml = new XMLSerializer().serializeToString(svg);
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = 640; c.height = 860;
+      const x = c.getContext('2d');
+      x.fillStyle = '#fffaf0'; x.fillRect(0, 0, 640, 860);
+      x.strokeStyle = '#b8892f'; x.lineWidth = 3; x.strokeRect(20, 20, 600, 820);
+      x.textAlign = 'center'; x.fillStyle = '#b8892f'; x.font = '22px sans-serif';
+      x.fillText(`XV AÑOS DE ${C.nombre.toUpperCase()}`, 320, 90);
+      x.fillStyle = '#5b3a45'; x.font = 'bold 44px serif'; x.fillText(guest.name, 320, 160, 560);
+      x.font = '26px sans-serif'; x.fillStyle = '#8a6470';
+      x.fillText(`${guest.partySize} ${guest.partySize === 1 ? 'persona' : 'personas'} · ${C.fechaTexto} · ${C.hora}`, 320, 205, 580);
+      x.fillStyle = '#fff'; x.fillRect(120, 250, 400, 400);
+      x.imageSmoothingEnabled = false; x.drawImage(img, 135, 265, 370, 370);
+      x.fillStyle = '#8a6470'; x.font = '24px sans-serif'; x.fillText('Presenta este código en la puerta', 320, 720);
+      x.fillStyle = '#b8892f'; x.font = '20px monospace'; x.fillText(guest.code, 320, 770);
+      c.toBlob((b) => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'invitacion-xv-ashley.png'; a.click(); });
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+  }
+
+  (async () => {
+    if (!CODE) return renderNoLink();
+    try { guest = await api('/api/guest?i=' + encodeURIComponent(CODE)); render(); }
+    catch (e) {
+      box.innerHTML = `<p class="lead">${e.status === 404 || e.status === 400 ? 'No encontramos esta invitación. Revisa que el enlace esté completo.' : 'No pudimos cargar tu invitación. Intenta de nuevo en un momento.'}</p>`;
+    }
+  })();
+})();
+</script>
+</body>
+</html>

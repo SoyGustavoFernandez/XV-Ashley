@@ -1,0 +1,15 @@
+{
+  "name": "invitacion-xv-ashley",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "20.x" },
+  "scripts": {
+    "test": "node test/logic.test.mjs",
+    "dev": "node dev/server.mjs",
+    "dev:real": "node --env-file=.env.local dev/server.mjs --real"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}
